@@ -8,5 +8,29 @@ class Node{
 }
 public class LinkedList {
     Node head;
-    
+    Node tail;
+    int size=0;
+
+    public void add(MataKuliah data){
+        Node baru= new Node(data);
+        if(head==null){
+            head= baru;
+            tail= baru;
+            size++;
+        }
+        else if(size==1){
+            head.next= baru;
+            tail= baru;
+            size++;
+        }
+        else{
+            Node temp= head;
+            while(temp.next!=null){
+                temp=temp.next;
+            }
+            temp.next= baru;
+            tail= baru;
+            size++;
+        }
+    }
 }
