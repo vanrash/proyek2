@@ -33,4 +33,17 @@ public class LinkedList {
             size++;
         }
     }
+
+    public MataKuliah findByKode(String kode){
+        Node temp=head;
+        
+        while(temp!=null){
+            if(temp.data.kodeMK.equalsIgnoreCase(kode)){
+                return temp.data;
+            }
+            temp=temp.next;
+        }
+        return null;
+    }
 }
+

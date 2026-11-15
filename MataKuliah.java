@@ -3,11 +3,11 @@ public class MataKuliah {
     int sks;
     boolean lulus=false;
     LinkedList daftarPrasyarat;
-    public MataKuliah(String kode, String nama, int sks, String semester) {
+    public MataKuliah(String kode, String nama, int sks, String ganjilGenap) {
         this.kodeMK = kode;
         this.NamaMK = nama;
         this.sks = sks;
-        this.Semester = semester;
+        this.Semester = ganjilGenap;
         daftarPrasyarat= new LinkedList();
     }
 }
