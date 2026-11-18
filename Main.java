@@ -1,18 +1,49 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        if (args.length != 3) {
-            System.err.println("Pemakaian: java Main <matakuliah.csv> <prasyarat.csv> <mhs_xx.txt>");
+        if (args.length != 0 && args.length != 3) {
+            System.err.println("Pemakaian: java Main [matakuliah.csv prasyarat.csv mhs_xx.txt]");
             System.exit(1);
         }
+
+        String fileMataKuliah = args.length == 3 ? args[0] : "matakuliah.csv";
+        String filePrasyarat = args.length == 3 ? args[1] : "prasyarat.csv";
+        String fileMahasiswa;
+        if (args.length == 3) {
+            fileMahasiswa = args[2];
+        } else {
+            String[] daftarMahasiswa = {"mhs_01.txt", "mhs_02.txt", "mhs_03.txt"};
+            System.out.println("Pilih data mahasiswa:");
+            System.out.println("1. mhs_01.txt");
+            System.out.println("2. mhs_02.txt");
+            System.out.println("3. mhs_03.txt");
+            System.out.print("Pilihan (1-3): ");
+
+            String pilihan;
+            try (Scanner input = new Scanner(System.in)) {
+                if (!input.hasNextLine()) {
+                    System.err.println("Pilihan mahasiswa tidak tersedia.");
+                    System.exit(1);
+                    return;
+                }
+                pilihan = input.nextLine().trim();
+            }
+            if (!pilihan.matches("[1-3]")) {
+                System.err.println("Pilihan tidak valid. Masukkan angka 1, 2, atau 3.");
+                System.exit(1);
+            }
+            fileMahasiswa = daftarMahasiswa[Integer.parseInt(pilihan) - 1];
+        }
+
         try {
-            LinkedList semua = bacaMataKuliah(args[0]);
-            bacaPrasyarat(args[1], semua);
-            String semester = bacaMahasiswa(args[2], semua);
+            LinkedList semua = bacaMataKuliah(fileMataKuliah);
+            bacaPrasyarat(filePrasyarat, semua);
+            String semester = bacaMahasiswa(fileMahasiswa, semua);
             tampilkanRekomendasi(semua, semester);
         } catch (IOException e) {
             System.err.println("Gagal membaca berkas: " + e.getMessage());
